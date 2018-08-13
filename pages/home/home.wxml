@@ -1,0 +1,43 @@
+<!-- 引入products-tpl模板文件 -->
+<import src="../tpls/products/products-tpl.wxml"/>
+<view class="container">
+  <!-- 页面上半部分的轮播图 -->
+  <!-- 给轮播图加上小点和自动轮播效果 -->
+  <swiper indicator-dots="true" autoplay="true" class="swiper">
+    <block wx:for="{{bannerArr}}">
+      <swiper-item class="banner-item" data-id="{{item.key_word}}" bindtap="onProductsItemTap">
+        <!-- 如果没有设置默认for循环的子项都在item下 -->
+        <image mode="aspectFill" class="item-img" src="{{item.img.url}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 页面上半部分的精选主题&最近新品 -->
+  <view class="home-main">
+    <!-- 页面中部三个专题部分 -->
+    <view class="home-main-theme">
+      <view class="home-main-header">精选主题</view>
+      <view class="theme-box">
+        <block wx:for="{{themeArr}}">
+          <!-- 对主题信息进行判断然后分别进行处理 -->
+          <view wx:if="{{index==2}}" class="theme-item big" 
+            data-id="{{item.id}}" data-name="{{item.name}}" bindtap="onThemeItemTap">
+            <image mode="aspectFill" src="{{item.topic_img.url}}"></image>
+          </view>
+          <view wx:else class="theme-item" 
+            data-id="{{item.id}}" data-name="{{item.name}}" bindtap="onThemeItemTap">
+            <image mode="aspectFill" src="{{item.topic_img.url}}"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+    
+    <!-- 页面底部的最新商品部分 -->
+    <view class="home-main-products">
+      <view class="home-main-header">最近新品</view>
+      <!-- 调用自定义的template模板文件 -->
+      <!-- 传值的时候将其传递为JavaScript对象 key:value -->
+      <template is="products" data="{{products:productsArr}}"></template>
+    </view>
+  </view>
+</view>

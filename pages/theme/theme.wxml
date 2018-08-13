@@ -1,0 +1,14 @@
+<!-- 专题页面 -->
+<!-- 引入商品展示的模板文件 -->
+<import src="../tpls/products/products-tpl.wxml"/>
+
+<view class="container">
+    <!-- 上半部分的头图 -->
+    <view class="theme-header">
+      <image src="{{themeInfo.head_img.url}}" mode="aspectFill"></image>
+    </view>
+    <!-- 下半部分的商品展示 -->
+    <view class="theme-main">
+      <template is="products" data="{{products:themeInfo.products}}"></template>
+    </view>
+</view>

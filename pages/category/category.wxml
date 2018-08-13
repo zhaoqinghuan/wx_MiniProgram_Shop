@@ -1,0 +1,29 @@
+<!-- 引入模板文件 -->
+<import src="../tpls/category/category-tpl.wxml"/>
+
+<!-- 页面顶级外部容器 -->
+<view class="container category-container">
+  <!-- 对左右分离式 布局进行容器包裹 因为外部容器在定义的时候定义的样式是行式
+    布局，最好的解决这个问题的方案就是在这里将其重新用一层容器包裹。-->
+  <view class="category-box">
+    <!-- 左侧分类选择部分 -->
+    <view class="left-box">
+      <!-- 将分类信息轮询展示 -->
+      <block wx:for="{{categoryTypeArr}}">
+        <view class="menu-item {{currentMenuIndex==index?'selected':''}}" 
+          data-id="{{item.id}}" data-index="{{index}}" bindtap="changeCategory">
+          {{item.name}}
+        </view>
+      </block>
+    </view>
+    <!-- 右侧根据分类展示对应分类的商品部分 -->
+    <view class="right-box">
+      <view class="foods-type-box">
+        <!-- 使用模板进行分类下的商品详情展示 -->
+        <template is="categorydetail" data="{{categoryInfo:categoryProducts}}">
+          
+        </template>
+      </view>
+    </view>
+  </view>
+</view>

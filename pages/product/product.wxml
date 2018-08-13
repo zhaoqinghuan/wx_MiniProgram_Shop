@@ -1,0 +1,94 @@
+<view class="container detail-container">
+  <!-- 上半部分 商品简要信息 -->
+  <view class="detail-header-box">
+
+    <!-- 购物车小图标部分 -->
+    <view class="fixed-btns-box" bindtap="onCartTap"> 
+      <view class="fiexd-cart">
+        <image src="../../imgs/icon/cart@top.png" mode="aspectFit"></image>
+        <!-- 购物车旁边显示数量的图标，如果购物车中无商品则图标不显示 -->
+        <view wx:if="{{cartTotalCounts>0}}">
+          {{cartTotalCounts}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品主图 -->
+    <view class="detail-topic-img">
+      <image src="{{product.main_img_url}}" mode="aspectFit"></image>
+    </view>
+
+    <!-- 选择数量&加入购物车按钮 -->
+    <view class="cart-box">
+      <!-- 左侧数量选择按钮 -->
+      <view class="product-counts">
+        <picker class="{{product.stock==0?'disabled':''}}" range="{{countsArray}}" bindchange="bindPickerChange">
+        <!-- picker的触发按钮 -->
+        <view>
+          <text class="counts-tips">数量</text>
+          <!-- 需要实时更新的数量信息 -->
+          <text class="counts-data">{{productCount}}</text>
+          <image class="counts-icon" src="../../imgs/icon/arrow@down.png" mode="aspectFit"></image>
+        </view>
+        </picker>
+      </view>
+      <!-- 分割线 -->
+      <view class="middle-border"></view>
+      <!-- 右侧加入购物车按钮 -->
+      <view class="add-cart-btn {{product.stock==0?'disabled':''}}" bindtap="onAddingToCartTap">
+        <text>加入购物车</text>
+        <image class="cart-icon" src="../../imgs/icon/cart.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <!-- 商品价格及库存信息 -->
+    <view class="basic-info-box">
+      <!-- 显示商品是否有库存 -->
+      <view class="stock" wx:if="{{product.stock>0}}">库存充足</view>
+      <view class="stock no" wx:else>库存不足</view>
+      <!-- 商品品名 -->
+      <view class="name">{{product.name}}</view>
+      <!-- 商品售价 -->
+      <view class="price">￥{{product.price}}</view>
+    </view>
+  </view>
+  <!-- 下半部分 商品详细信息 -->
+  <view class="detail-bottom-box">
+    <!-- 选项卡 -->
+    <view class="tabs-box">
+      <!-- 用循环获取的方法展示这个部分的三个选项卡 -->
+      <!-- 这里的数据我们采取在页面定义写死的方式 ，一般建议将其写到对应js文件的data中作为参数 -->
+      <block wx:for="{{['商品详情','产品参数','售后保障']}}">
+        <!-- 为选项卡添加点击事件已实现点击修改当前选中选项卡的样式 -->
+        <!-- 将当前选项卡的下标作为index参数绑定到tab上 -->
+        <view class="tabs-item {{currentTabsIndex==index?'selected':''}}" 
+        bindtap="onTabsItemTap" data-index="{{index}}">
+          {{item}}
+        </view>
+      </block>
+    </view>
+    <!-- 选项卡对应的内容 -->
+    <view class="product-detail-box">
+      <!-- hidden属性为TRUE时标签隐藏，否则显示 这里根据当前view对应Tab下标进行判断应该是TRUE还是FALSE -->
+      <view hidden="{{currentTabsIndex!=0}}" class="product-detail-imgs">
+        <!-- 商品详情部分内容是一组图片，将其直接进行轮询展示 -->
+        <block wx:for="{{product.imgs}}">
+          <image src="{{item.img_url.url}}" mode="aspectFill"></image>
+        </block>
+      </view>
+      <view hidden="{{currentTabsIndex!=1}}" class="product-detail-properties">
+        <!-- 产品参数内容是一组对应的数据 -->
+        <block wx:for="{{product.properties}}">
+          <view class="properties-item">
+            <view class="properties-name">{{item.name}}</view>
+            <view class="properties-detail">{{item.detail}}</view>
+          </view>
+        </block>
+      </view>
+      <view hidden="{{currentTabsIndex!=2}}" class="product-detail-protect">
+        <!-- 售后保障对应一句解决方案，直接写成固定参数 -->
+        <view>七天无理由退货，详情咨询客服。</view>
+      </view>
+    </view>
+  </view>
+</view>

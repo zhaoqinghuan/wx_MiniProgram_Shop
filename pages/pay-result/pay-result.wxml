@@ -1,0 +1,18 @@
+<view class="container pay-result-container">
+  <view class="pay-result">
+    <!-- 支付成功页面展示支付成功 -->
+    <block wx:if="{{payResult=='true'}}">
+     <image src="../../imgs/icon/pay@success.png"></image>
+     <view>支付成功</view>
+     <!-- 单击按钮跳转到订单详情页面 -->
+     <button type="primary" bindtap="viewOrder"> 查看订单 </button>
+    </block>
+    <!-- 支付失败展示支付失败 -->
+    <block wx:else>
+      <image src="../../imgs/icon/pay@error.png"></image>
+      <view>支付失败</view>
+      <!-- 点击按钮跳转到订单详情页 -->
+      <button type="default" bindtap="viewOrder"> 查看订单 </button>
+    </block>
+  </view>
+</view>

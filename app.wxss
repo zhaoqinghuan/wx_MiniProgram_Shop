@@ -1,0 +1,11 @@
+/* 全局样式设置文件 */
+/* 给当前页的顶级view标签设置样式 */
+.container {
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: #fff;
+  font-family: "Microsoft Yahei";
+}
